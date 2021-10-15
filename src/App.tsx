@@ -9,15 +9,17 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import {News} from './components/News/News';
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {ActionType, DialogsType, ProfileType, RootAppStateType} from "./Redux/appState";
+import {DialogsType, ProfileType} from "./Redux/store";
+import {ActionType} from "./Redux/profile-reducer";
+
 
 
 type AppPropsType = {
     profilePage: ProfileType
     dialogsPage: DialogsType
     /*addPost: (textPost: string) => void*/
-    changePostMessage: (text: string) => void
-    newPostText: string
+    //changePostMessage: (text: string) => void
+    //newPostText: string
     dispatch: (action: ActionType) => void
 }
 
@@ -32,8 +34,8 @@ function App(props: AppPropsType) {
                         posts={props.profilePage.posts}
                         /*addPost={props.addPost}*/
                         dispatch={props.dispatch}
-                        newPostText={props.newPostText}
-                        changePostMessage={props.changePostMessage}
+                        newPostText={props.profilePage.newPostText}
+                        //changePostMessage={props.changePostMessage}
                     />}
                     />
                     <Route exact path='/dialogs' render={() => <Dialogs

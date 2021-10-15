@@ -1,6 +1,14 @@
-import {PostsType, ProfileType} from "./appState";
+import {PostsType, ProfileType} from "./store";
 
-const profileReducer = (state: ProfileType, action: ActionType):ProfileType => {
+let initialState: ProfileType = {
+        posts: [
+            {id: '1', message: "Hi, how are you?", likeCount: 15},
+            {id: '2', message: "This is my first message!", likeCount: 11},
+        ],
+        newPostText: "",
+    }
+
+const profileReducer = (state: ProfileType = initialState, action: ActionType):ProfileType => {
     switch (action.type) {
         case "ADD-POST":
             const newPost: PostsType = {id: "4", message: action.textPost, likeCount: 0};
@@ -9,8 +17,7 @@ const profileReducer = (state: ProfileType, action: ActionType):ProfileType => {
             return state
 
         case "CHANGE-POST-MESSAGE":
-            state.newPostText = action.text
-            return state
+            return {...state, newPostText: action.text}
         default:
             return state
     }

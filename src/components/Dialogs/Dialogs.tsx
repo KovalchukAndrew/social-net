@@ -9,7 +9,7 @@ import {
     RootAppStateType, sendMessageBodyAC,
     updateNewMessageBodyAC,
     UsersArrayType
-} from "../../Redux/appState";
+} from "../../Redux/store";
 
 export type DialogsPropsType = {
     usersArray: Array<UsersArrayType>
