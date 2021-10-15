@@ -1,3 +1,6 @@
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+
 export type MessagesType = {
     id: string, message: string,
 }
@@ -58,6 +61,7 @@ const store: StoreType = {
             ],
             newMessageBogy: "",
         },
+
     },
     _callback() {
     },
@@ -78,23 +82,10 @@ const store: StoreType = {
         return this._state
     },
     dispatch(action: ActionType) {
-        if (action.type === "ADD-POST") {
-            const newPost: PostsType = {id: "4", message: action.textPost, likeCount: 0};
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ""
-            this._callback()
-        } else if (action.type === "CHANGE-POST-MESSAGE") {
-            this._state.profilePage.newPostText = action.text
-            this._callback()
-        } else if (action.type === "UPDATE-NEW-MESSAGE-BODY") {
-            this._state.dialogsPage.newMessageBogy = action.body;
-            this._callback();
-        } else if (action.type === "SEND-MESSAGE") {
-            let body = this._state.dialogsPage.newMessageBogy;
-            this._state.dialogsPage.newMessageBogy = "";
-            this._state.dialogsPage.messages.push({id: '6', message: body});
-            this._callback();
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+
+        this._callback()
     }
 }
 
