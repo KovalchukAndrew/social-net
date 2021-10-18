@@ -8,12 +8,13 @@ import App from "./App";
 import {Provider} from "react-redux";
 
 const rerenderEntireTree = () => {
+    //let state = store.getState()
     ReactDOM.render(
         <Provider store={store}>
             <App
-
-                profilePage={store.getState().profilePage}
-                dialogsPage={store.getState().dialogsPage}
+                store={store.getState()}
+                //profilePage={store.getState().profilePage}
+                //dialogsPage={store.getState().dialogsPage}
                 /*addPost={store.addPost.bind(store)}*/
                 dispatch={store.dispatch.bind(store)}
 

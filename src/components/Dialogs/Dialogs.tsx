@@ -3,37 +3,41 @@ import s from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {
-    ActionType,
-    DialogsType,
-    MessagesType,
-    RootAppStateType, sendMessageBodyAC,
-    updateNewMessageBodyAC,
-    UsersArrayType
-} from "../../Redux/store";
+    ActionType, sendMessageBodyAC, updateNewMessageBodyAC
+} from "../../Redux/dialogs-reducer";
+import {AppRootStateType} from "../../Redux/redux-store";
+import {DialogsType} from "../../Redux/store";
 
 export type DialogsPropsType = {
-    usersArray: Array<UsersArrayType>
-    messages: Array<MessagesType>
-    newMessageBogy: string
-    dispatch: (action:ActionType) => void
+    sendMessageBody: () => void
+    updateNewMessageBody: (body:string) => void
+    dialogsPage: DialogsType
+    //store: AppRootStateType
+    //usersArray: Array<UsersArrayType>
+    //messages: Array<MessagesType>
+    //newMessageBogy: string
+    //dispatch: (action:ActionType) => void
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
 
-    let dialogsElemets = props.usersArray.map(user => <DialogItem name={user.name} id={user.id}/>)
-    let messagesElement = props.messages.map(message => <Message text={message.message}/>)
-    let newMessageBody = props.newMessageBogy;
+    let dialogsElemets = props.dialogsPage.usersArray.map(user => <DialogItem name={user.name} id={user.id}/>)
+    let messagesElement = props.dialogsPage.messages.map(message => <Message text={message.message}/>)
+    let newMessageBody = props.dialogsPage.newMessageBogy;
 
     const onSendMessageClick = () => {
-        props.dispatch(sendMessageBodyAC())
+        props.sendMessageBody()
+        //props.dispatch(sendMessageBodyAC())
     }
     const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-        let bogy = e.target.value
-        props.dispatch(updateNewMessageBodyAC(bogy))
+        //let bogy = e.target.value
+        props.updateNewMessageBody(e.target.value)
+        //props.dispatch(updateNewMessageBodyAC(bogy))
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.charCode === 13) {
-            props.dispatch(sendMessageBodyAC())
+            props.sendMessageBody()
+            //props.dispatch(sendMessageBodyAC())
         }
     }
 

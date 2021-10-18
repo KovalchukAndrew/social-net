@@ -1,15 +1,18 @@
 import React from "react";
 import s from './Profile.module.css'
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {MyPosts} from "./MyPosts/MyPosts";
-import {PostsType} from "../../Redux/store";
+
+import {PostsType, StoreType} from "../../Redux/store";
 import {ActionType} from "../../Redux/profile-reducer";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {AppRootStateType} from "../../Redux/redux-store";
 
 
 
 export type ProfilePropsType = {
-    posts: Array<PostsType>
-    newPostText: string
+    store: AppRootStateType
+    //posts: Array<PostsType>
+    //newPostText: string
     /*addPost: (textPost: string) => void*/
     //changePostMessage: (text: string) => void
     dispatch: (action:ActionType) => void
@@ -20,11 +23,12 @@ export function Profile(props: ProfilePropsType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts
-                posts={props.posts}
+            <MyPostsContainer
+                store={props.store}
+                //posts={props.posts}
                 /*addPost={props.addPost}*/
                 dispatch={props.dispatch}
-                newPostText={props.newPostText}
+                //newPostText={props.newPostText}
                 //changePostMessage={props.changePostMessage}
             /></div>
     )

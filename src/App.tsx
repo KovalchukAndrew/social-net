@@ -9,14 +9,17 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import {News} from './components/News/News';
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {DialogsType, ProfileType} from "./Redux/store";
+import {DialogsType, ProfileType, StoreType} from "./Redux/store";
 import {ActionType} from "./Redux/profile-reducer";
+import {AppRootStateType} from "./Redux/redux-store";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
 
 type AppPropsType = {
-    profilePage: ProfileType
-    dialogsPage: DialogsType
+    store: AppRootStateType
+    //profilePage: ProfileType
+    //dialogsPage: DialogsType
     /*addPost: (textPost: string) => void*/
     //changePostMessage: (text: string) => void
     //newPostText: string
@@ -24,6 +27,7 @@ type AppPropsType = {
 }
 
 function App(props: AppPropsType) {
+
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -31,17 +35,19 @@ function App(props: AppPropsType) {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/profile' render={() => <Profile
-                        posts={props.profilePage.posts}
+                        store={props.store}
+                        //posts={props.profilePage.posts}
                         /*addPost={props.addPost}*/
                         dispatch={props.dispatch}
-                        newPostText={props.profilePage.newPostText}
+                        //newPostText={props.profilePage.newPostText}
                         //changePostMessage={props.changePostMessage}
                     />}
                     />
-                    <Route exact path='/dialogs' render={() => <Dialogs
-                        usersArray={props.dialogsPage.usersArray}
-                        messages={props.dialogsPage.messages}
-                        newMessageBogy={props.dialogsPage.newMessageBogy}
+                    <Route exact path='/dialogs' render={() => <DialogsContainer
+                        store={props.store}
+                        //usersArray={props.dialogsPage.usersArray}
+                        //messages={props.dialogsPage.messages}
+                        //newMessageBogy={props.dialogsPage.newMessageBogy}
                         dispatch={props.dispatch}
                     />}
                     />

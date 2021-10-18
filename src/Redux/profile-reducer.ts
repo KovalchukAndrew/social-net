@@ -8,6 +8,7 @@ let initialState: ProfileType = {
         newPostText: "",
     }
 
+
 const profileReducer = (state: ProfileType = initialState, action: ActionType):ProfileType => {
     switch (action.type) {
         case "ADD-POST":

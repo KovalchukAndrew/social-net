@@ -30,11 +30,11 @@ export type RootAppStateType = {
 export type StoreType = {
     _state: RootAppStateType
     _callback: () => void
-    addPost: (textPost: string) => void
-    changePostMessage: (text: string) => void
+    //addPost: (textPost: string) => void
+    //changePostMessage: (text: string) => void
     subscribe: (observer: () => void) => void
     getState: () => RootAppStateType
-    dispatch: (action: ActionType) => void
+    //dispatch: (action: ActionType) => void
 }
 
 const store: StoreType = {
@@ -65,30 +65,31 @@ const store: StoreType = {
     },
     _callback() {
     },
-    addPost(textPost: string) {
+    /*addPost(textPost: string) {
         const newPost: PostsType = {id: "4", message: textPost, likeCount: 0};
         this._state.profilePage.posts.push(newPost)
         this._state.profilePage.newPostText = ""
         this._callback()
-    },
-    changePostMessage(text: string) {
+    },*/
+    /*changePostMessage(text: string) {
         this._state.profilePage.newPostText = text
         this._callback()
-    },
+    },*/
     subscribe(observer) {
         this._callback = observer;
     },
     getState() {
         return this._state
     },
-    dispatch(action: ActionType) {
+    /*dispatch(action: ActionType) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
 
         this._callback()
-    }
+    }*/
 }
 
+/*
 export type AddPostActionType = ReturnType<typeof addPostAC>
 export type ChangePostMessageActionType = ReturnType<typeof changePostMessageAC>
 export type UpdateNewMessageBody = ReturnType<typeof updateNewMessageBodyAC>
@@ -108,5 +109,6 @@ export const sendMessageBodyAC = () => {
     return {type: "SEND-MESSAGE"} as const
 }
 
+*/
 
 export default store;
