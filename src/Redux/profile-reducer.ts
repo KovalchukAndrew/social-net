@@ -16,10 +16,14 @@ export type InitialStateType = typeof initialState
 const profileReducer = (state: InitialStateType = initialState, action: ActionType):InitialStateType => {
     switch (action.type) {
         case "ADD-POST":
-            const newPost: PostsType = {id: "4", message: action.textPost, likeCount: 0};
-            state.posts.push(newPost)
+        {
             state.newPostText = ""
-            return {...state}
+            return {...state, posts: [...state.posts, {id: "4", message: action.textPost, likeCount: 0}]}
+        }
+            /*const newPost: PostsType = {id: "4", message: action.textPost, likeCount: 0};
+            state.posts.push(newPost)
+            state.newPostText = ""*/
+
 
         case "CHANGE-POST-MESSAGE":
             return {...state, newPostText: action.text}
