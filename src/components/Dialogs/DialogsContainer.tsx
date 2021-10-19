@@ -1,28 +1,19 @@
-import React, {ChangeEvent, KeyboardEvent} from "react";
-
-import {DialogItem} from "./DialogItem/DialogItem";
-import {Message} from "./Message/Message";
+import React from "react";
 import {
-    ActionType, sendMessageBodyAC, updateNewMessageBodyAC
+    InitialStateType, sendMessageBodyAC, updateNewMessageBodyAC
 } from "../../Redux/dialogs-reducer";
 import {AppRootStateType} from "../../Redux/redux-store";
 import {Dialogs} from "./Dialogs";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
 
-export type DialogsPropsType = {
-    store: AppRootStateType
-    //usersArray: Array<UsersArrayType>
-    //messages: Array<MessagesType>
-    //newMessageBogy: string
-    dispatch: (action:ActionType) => void
-}
-
+/*
 export const DialogsContainer = (props: DialogsPropsType) => {
     let state = props.store.dialogsPage
     const onSendMessageClick = () => {
         props.dispatch(sendMessageBodyAC())
     }
     const onNewMessageChange = (body:string) => {
-
         props.dispatch(updateNewMessageBodyAC(body))
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -37,3 +28,33 @@ export const DialogsContainer = (props: DialogsPropsType) => {
         />
     )
 }
+*/
+
+type mapStateToPropsType ={
+    dialogsPage: InitialStateType
+}
+type MapDispatchToPropsType = {
+    updateNewMessageBody: (body: string) => void
+    sendMessageBody: () => void
+}
+
+export type DialogsPropsType = mapStateToPropsType & MapDispatchToPropsType
+
+const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
+    return {
+        dialogsPage: state.dialogsPage
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+    return {
+        updateNewMessageBody: (body: string) => {
+            dispatch(updateNewMessageBodyAC(body))
+        },
+        sendMessageBody: () => {
+            dispatch(sendMessageBodyAC())
+        }
+    }
+}
+
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps) (Dialogs);

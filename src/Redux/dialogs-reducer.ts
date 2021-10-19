@@ -1,21 +1,32 @@
-import {DialogsType} from "./store";
 
-let initialState: DialogsType = {
-        usersArray: [
+export type MessageType = {
+    id: string
+    message: string
+}
+export type DialogType = {
+    id: string
+    name: string
+}
+
+let initialState = {
+        dialogs: [
             {id: '1', name: "Andrew"},
             {id: '2', name: "Polly"},
             {id: '3', name: "Kirill"},
             {id: '4', name: "John"},
-        ],
+        ] as Array<DialogType>,
         messages: [
             {id: '1', message: "Hi"},
             {id: '2', message: "How are you"},
             {id: '3', message: "What's up"},
             {id: '4', message: "Yo"},
-        ],
+        ] as Array<MessageType>,
         newMessageBogy: "",
     }
-const dialogsReducer = (state: DialogsType = initialState, action: ActionType):DialogsType => {
+
+    export type InitialStateType = typeof initialState
+
+const dialogsReducer = (state: InitialStateType = initialState, action: ActionType):InitialStateType => {
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-BODY":
             state.newMessageBogy = action.body;

@@ -4,15 +4,15 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
-import {Dialogs} from "./components/Dialogs/Dialogs";
+
 import {BrowserRouter, Route} from 'react-router-dom'
 import {News} from './components/News/News';
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {DialogsType, ProfileType, StoreType} from "./Redux/store";
 import {ActionType} from "./Redux/profile-reducer";
 import {AppRootStateType} from "./Redux/redux-store";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+
 
 
 
@@ -44,11 +44,11 @@ function App(props: AppPropsType) {
                     />}
                     />
                     <Route exact path='/dialogs' render={() => <DialogsContainer
-                        store={props.store}
+                        //store={props.store}
                         //usersArray={props.dialogsPage.usersArray}
                         //messages={props.dialogsPage.messages}
                         //newMessageBogy={props.dialogsPage.newMessageBogy}
-                        dispatch={props.dispatch}
+                        //dispatch={props.dispatch}
                     />}
                     />
                     <Route path='/news' render={() => <News/>}/>

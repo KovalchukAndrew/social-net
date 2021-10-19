@@ -1,33 +1,33 @@
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 
-export type MessagesType = {
+type MessagesType = {
     id: string, message: string,
 }
-export type UsersArrayType = {
+type UsersArrayType = {
     id: string, name: string
 }
-export type PostsType = {
+type PostsType = {
     id: string
     message: string
     likeCount: number
 }
-export type ProfileType = {
+type ProfileType = {
     posts: Array<PostsType>
     newPostText: string
 }
-export type DialogsType = {
+type DialogsType = {
     usersArray: Array<UsersArrayType>
     messages: Array<MessagesType>
     newMessageBogy: string
 }
-export type RootAppStateType = {
+type RootAppStateType = {
     profilePage: ProfileType
     dialogsPage: DialogsType
 
 }
 
-export type StoreType = {
+type StoreType = {
     _state: RootAppStateType
     _callback: () => void
     //addPost: (textPost: string) => void
@@ -111,4 +111,4 @@ export const sendMessageBodyAC = () => {
 
 */
 
-export default store;
+

@@ -2,26 +2,11 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {
-    ActionType, sendMessageBodyAC, updateNewMessageBodyAC
-} from "../../Redux/dialogs-reducer";
-import {AppRootStateType} from "../../Redux/redux-store";
-import {DialogsType} from "../../Redux/store";
-
-export type DialogsPropsType = {
-    sendMessageBody: () => void
-    updateNewMessageBody: (body:string) => void
-    dialogsPage: DialogsType
-    //store: AppRootStateType
-    //usersArray: Array<UsersArrayType>
-    //messages: Array<MessagesType>
-    //newMessageBogy: string
-    //dispatch: (action:ActionType) => void
-}
+import {DialogsPropsType} from "./DialogsContainer";
 
 export const Dialogs = (props: DialogsPropsType) => {
 
-    let dialogsElemets = props.dialogsPage.usersArray.map(user => <DialogItem name={user.name} id={user.id}/>)
+    let dialogsElemets = props.dialogsPage.dialogs.map(user => <DialogItem name={user.name} id={user.id}/>)
     let messagesElement = props.dialogsPage.messages.map(message => <Message text={message.message}/>)
     let newMessageBody = props.dialogsPage.newMessageBogy;
 

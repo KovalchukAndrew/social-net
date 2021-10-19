@@ -1,20 +1,14 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 
-import {ActionType, addPostAC, changePostMessageAC} from "../../../Redux/profile-reducer";
-import {PostsType, StoreType} from "../../../Redux/store";
+import {ActionType, addPostAC, changePostMessageAC, PostsType} from "../../../Redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {AppRootStateType} from "../../../Redux/redux-store";
+import {connect} from "react-redux";
+import {Dialogs} from "../../Dialogs/Dialogs";
+import {Dispatch} from "redux";
+import {InitialStateType, sendMessageBodyAC, updateNewMessageBodyAC} from "../../../Redux/dialogs-reducer";
 
-
-export type MyPostsContainerPropsType = {
-    store: AppRootStateType
-    //posts: Array<PostsType>
-    /*addPost: (textPost: string) => void*/
-    //changePostMessage: (text: string) => void
-    //newPostText: string
-    dispatch: (action: ActionType) => void
-}
-
+/*
 export const MyPostsContainer = (props: MyPostsContainerPropsType) => {
     let state = props.store
 
@@ -34,4 +28,35 @@ export const MyPostsContainer = (props: MyPostsContainerPropsType) => {
                  newPostText={state.profilePage.newPostText}
         />
     )
+}*/
+
+type MapStateToPropsType = {
+    posts: Array<PostsType>
+    newPostText: string
 }
+type MapDispatchToPropsType = {
+    addPost: (text: string) => void
+    changePostMessage: (text: string) => void
+}
+
+export type MyPostPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText,
+    }
+}
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+    return {
+        addPost: (text: string) => {
+            dispatch(addPostAC(text))
+        },
+        changePostMessage: (text: string) => {
+            dispatch(changePostMessageAC(text))
+        }
+    }
+}
+
+
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);

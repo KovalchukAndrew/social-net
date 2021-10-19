@@ -1,8 +1,8 @@
 import React from "react";
 import s from './Posts.module.css'
-import {PostsType, RootAppStateType} from "../../../../Redux/store";
+import {PostsType} from "../../../../Redux/profile-reducer";
 
-export function Posts(props:PostsType) {
+export function Posts(props: PostsType) {
     return (
         <div className={s.item}>
             <img src = 'https://avatars.mds.yandex.net/get-kinopoisk-post-img/1539913/2c3147c789ba0710ef94823ae8e57901/960'/>
