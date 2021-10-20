@@ -7,12 +7,12 @@ import {AppRootStateType} from "../../Redux/redux-store";
 
 
 export type ProfilePropsType = {
-    store: AppRootStateType
+    //store: AppRootStateType
     //posts: Array<PostsType>
     //newPostText: string
     /*addPost: (textPost: string) => void*/
     //changePostMessage: (text: string) => void
-    dispatch: (action:ActionType) => void
+    //dispatch: (action:ActionType) => void
 }
 
 export function Profile(props: ProfilePropsType) {

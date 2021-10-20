@@ -12,18 +12,20 @@ import {Settings} from "./components/Settings/Settings";
 import {ActionType} from "./Redux/profile-reducer";
 import {AppRootStateType} from "./Redux/redux-store";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {Users} from "./components/Users/Users";
+
 
 
 
 
 type AppPropsType = {
-    store: AppRootStateType
+    //store: AppRootStateType
     //profilePage: ProfileType
     //dialogsPage: DialogsType
     /*addPost: (textPost: string) => void*/
     //changePostMessage: (text: string) => void
     //newPostText: string
-    dispatch: (action: ActionType) => void
+    //dispatch: (action: ActionType) => void
 }
 
 function App(props: AppPropsType) {
@@ -35,10 +37,10 @@ function App(props: AppPropsType) {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/profile' render={() => <Profile
-                        store={props.store}
+                        //store={props.store}
                         //posts={props.profilePage.posts}
                         /*addPost={props.addPost}*/
-                        dispatch={props.dispatch}
+                        //dispatch={props.dispatch}
                         //newPostText={props.profilePage.newPostText}
                         //changePostMessage={props.changePostMessage}
                     />}
@@ -51,6 +53,7 @@ function App(props: AppPropsType) {
                         //dispatch={props.dispatch}
                     />}
                     />
+                    <Route path='/users' render={() => <Users/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/nast' render={() => <Settings/>}/>

@@ -12,11 +12,11 @@ const rerenderEntireTree = () => {
     ReactDOM.render(
         <Provider store={store}>
             <App
-                store={store.getState()}
+                //store={store.getState()}
                 //profilePage={store.getState().profilePage}
                 //dialogsPage={store.getState().dialogsPage}
                 /*addPost={store.addPost.bind(store)}*/
-                dispatch={store.dispatch.bind(store)}
+                //dispatch={store.dispatch.bind(store)}
 
                 //changePostMessage={store.changePostMessage.bind(store)}
             />
