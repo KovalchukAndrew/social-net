@@ -4,7 +4,6 @@ import s from './Navbar.module.css'
 
 function Navbar() {
     return (
-
             <nav className={s.nav}>
                 <div className={s.item}>
                     <NavLink to='/profile' activeClassName={s.activeLink}>Profile</NavLink>
@@ -27,7 +26,6 @@ function Navbar() {
             </nav>
 
     )
-
 }
 
 export default Navbar;

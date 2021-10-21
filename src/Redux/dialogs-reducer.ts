@@ -1,3 +1,4 @@
+import {v1} from "uuid";
 
 export type MessageType = {
     id: string
@@ -10,16 +11,16 @@ export type DialogType = {
 
 let initialState = {
         dialogs: [
-            {id: '1', name: "Andrew"},
-            {id: '2', name: "Polly"},
-            {id: '3', name: "Kirill"},
-            {id: '4', name: "John"},
+            {id: v1(), name: "Andrew"},
+            {id: v1(), name: "Polly"},
+            {id: v1(), name: "Kirill"},
+            {id: v1(), name: "John"},
         ] as Array<DialogType>,
         messages: [
-            {id: '1', message: "Hi"},
-            {id: '2', message: "How are you"},
-            {id: '3', message: "What's up"},
-            {id: '4', message: "Yo"},
+            {id: v1(), message: "Hi"},
+            {id: v1(), message: "How are you"},
+            {id: v1(), message: "What's up"},
+            {id: v1(), message: "Yo"},
         ] as Array<MessageType>,
         newMessageBogy: "",
     }

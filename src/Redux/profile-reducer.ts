@@ -1,3 +1,5 @@
+import {v1} from "uuid";
+
 export type PostsType = {
     id: string
     message: string
@@ -6,8 +8,8 @@ export type PostsType = {
 
 let initialState = {
         posts: [
-            {id: '1', message: "Hi, how are you?", likeCount: 15},
-            {id: '2', message: "This is my first message!", likeCount: 11},
+            {id: v1(), message: "Hi, how are you?", likeCount: 15},
+            {id: v1(), message: "This is my first message!", likeCount: 11},
         ] as Array<PostsType>,
         newPostText: "",
     }
@@ -18,7 +20,7 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
         case "ADD-POST":
         {
             state.newPostText = ""
-            return {...state, posts: [...state.posts, {id: "4", message: action.textPost, likeCount: 0}]}
+            return {...state, posts: [...state.posts, {id: v1(), message: action.textPost, likeCount: 0}]}
         }
 
         case "CHANGE-POST-MESSAGE":

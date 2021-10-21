@@ -12,20 +12,15 @@ export const Dialogs = (props: DialogsPropsType) => {
 
     const onSendMessageClick = () => {
         props.sendMessageBody()
-        //props.dispatch(sendMessageBodyAC())
     }
-    const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-        //let bogy = e.target.value
+    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewMessageBody(e.target.value)
-        //props.dispatch(updateNewMessageBodyAC(bogy))
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.charCode === 13) {
             props.sendMessageBody()
-            //props.dispatch(sendMessageBodyAC())
         }
     }
-
 
 
     return <div className={s.dialogs}>
@@ -40,9 +35,12 @@ export const Dialogs = (props: DialogsPropsType) => {
                 value={newMessageBody}
                 onChange={onNewMessageChange}
                 placeholder="Enter message"
-                onKeyPress={onKeyPressHandler}
-            ></textarea></div>
-            <div><button onClick={onSendMessageClick}>Add message</button></div>
+                onKeyPress={onKeyPressHandler}>
+            </textarea>
+            </div>
+            <div>
+                <button onClick={onSendMessageClick}>Add message</button>
+            </div>
         </div>
     </div>
 }

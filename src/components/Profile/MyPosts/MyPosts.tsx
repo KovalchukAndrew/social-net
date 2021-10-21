@@ -3,8 +3,6 @@ import s from './MyPosts.module.css'
 import {Posts} from "./Post/Posts";
 import {MyPostPropsType} from "./MyPostsContainer";
 
-
-
 export const MyPosts = (props: MyPostPropsType) => {
     let postsElement = props.posts.map((p) => <Posts id={p.id} message={p.message} likeCount={p.likeCount}/>)
 

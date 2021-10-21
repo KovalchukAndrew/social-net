@@ -1,5 +1,4 @@
 import React from "react";
-import s from './ProfileInfo.module.css'
 
 export function ProfileInfo(props: any) {
     return (
