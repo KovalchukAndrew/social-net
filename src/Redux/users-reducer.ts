@@ -1,12 +1,21 @@
 import {v1} from "uuid";
 
 export type UserType = {
-    id: string
-    photoUrl: string
+    name: string
+    id: number
+    photos: {
+        small: null | string
+        large: null | string
+    }
+    status: null | string
     followed: boolean
-    fullName: string
-    status: string
-    location: LocationType
+    uniqueUrlName: null | string
+    // id: string
+    // photoUrl: string
+    // followed: boolean
+    // name: string
+    // status: string
+    // location: LocationType
 }
 export type LocationType = {
     city: string
@@ -15,12 +24,11 @@ export type LocationType = {
 
 let initialState = {
         users: [
-            {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, fullName: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-            {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: false, fullName: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-            {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, fullName: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-            {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: false, fullName: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-            {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, fullName: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-
+            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
+            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: false, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
+            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
+            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: false, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
+            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
         ] as Array<UserType>,
 
     }
@@ -46,10 +54,10 @@ export type SetUsersActionType = ReturnType<typeof setUsersAC>
 
 export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType
 
-export const followAC = (id: string) => {
+export const followAC = (id: number) => {
     return {type: "FOLLOW", id} as const
 }
-export const unfollowAC = (id: string) => {
+export const unfollowAC = (id: number) => {
     return {type: "UNFOLLOW", id} as const
 }
 export const setUsersAC = (users: Array<UserType>) => {
