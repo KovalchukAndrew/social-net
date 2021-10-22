@@ -1,7 +1,7 @@
 import React from "react";
 import {UsersPropsType} from "./UsersContainer";
 import s from "./user.module.css"
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {UserType} from "../../Redux/users-reducer";
 import userPhoto from "../../assets/images/man-300x300.png"
 

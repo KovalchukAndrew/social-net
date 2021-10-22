@@ -1,5 +1,3 @@
-import {v1} from "uuid";
-
 export type UserType = {
     name: string
     id: number
@@ -10,12 +8,6 @@ export type UserType = {
     status: null | string
     followed: boolean
     uniqueUrlName: null | string
-    // id: string
-    // photoUrl: string
-    // followed: boolean
-    // name: string
-    // status: string
-    // location: LocationType
 }
 export type LocationType = {
     city: string
