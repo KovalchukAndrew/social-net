@@ -6,18 +6,19 @@ import {UserType} from "../../Redux/users-reducer";
 import userPhoto from "../../assets/images/man-300x300.png"
 
 class Users extends React.Component<UsersPropsType> {
-    getUsers = () => {
-        if (this.props.users.length === 0) {
 
+    constructor(props: UsersPropsType) {
+
+        super(props);
             axios.get<{ items: UserType[] }>("https://social-network.samuraijs.com/api/1.0/users")
                 .then(response => {
                     this.props.setUsers(response.data.items)
                 })
-        }
     }
+
     render() {
         return <div>
-            <button onClick={this.getUsers}>GetUsers</button>
+
             {this.props.users.map(u => <div key={u.id}>
             <span>
                 <div>
