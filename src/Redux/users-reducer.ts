@@ -15,26 +15,25 @@ export type LocationType = {
 }
 
 let initialState = {
-        users: [
-            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: false, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: false, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-            // {id: v1(), photoUrl: "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png", followed: true, name: "Andrew", status: "Hello, you are welcome", location: {city: "Minsk", country: "Belarus"}},
-        ] as Array<UserType>,
-
-    }
+    users: [] as Array<UserType>,
+    pageSize: 20,
+    totalUserCount: 0,
+    currentPage: 1,
+}
 export type InitialStateType = typeof initialState
 
-const usersReducer = (state: InitialStateType = initialState, action: ActionType):InitialStateType => {
+const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case "FOLLOW":
-            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: true } : u)}
+            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: true} : u)}
         case "UNFOLLOW":
-            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false } : u)}
+            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
         case "SET-USERS":
-            return {...state, users: [...state.users, ...action.users]}
-
+            return {...state, users: action.users}
+        case "SET-CURRENT-PAGE":
+            return {...state, currentPage: action.currentPage}
+        case "SET-TOTAL-COUNT":
+            return {...state, totalUserCount: action.totalCount}
         default:
             return state
     }
@@ -43,8 +42,10 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
 export type FollowActionType = ReturnType<typeof followAC>
 export type UnfollowActionType = ReturnType<typeof unfollowAC>
 export type SetUsersActionType = ReturnType<typeof setUsersAC>
+export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
+export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCountAC>
 
-export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType
+export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | setTotalUsersCountActionType
 
 export const followAC = (id: number) => {
     return {type: "FOLLOW", id} as const
@@ -54,5 +55,11 @@ export const unfollowAC = (id: number) => {
 }
 export const setUsersAC = (users: Array<UserType>) => {
     return {type: "SET-USERS", users} as const
+}
+export const setCurrentPageAC = (currentPage: number) => {
+    return{type: "SET-CURRENT-PAGE", currentPage} as const
+}
+export const setTotalUsersCountAC = (totalCount: number) => {
+    return{type: "SET-TOTAL-COUNT", totalCount} as const
 }
 export default usersReducer;
