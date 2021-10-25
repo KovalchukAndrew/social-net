@@ -8,6 +8,7 @@ export type UserType = {
     status: null | string
     followed: boolean
     uniqueUrlName: null | string
+    isFetching: boolean
 }
 export type LocationType = {
     city: string
@@ -19,6 +20,7 @@ let initialState = {
     pageSize: 20,
     totalUserCount: 0,
     currentPage: 1,
+    isFetching: false,
 }
 export type InitialStateType = typeof initialState
 
@@ -34,6 +36,8 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
             return {...state, currentPage: action.currentPage}
         case "SET-TOTAL-COUNT":
             return {...state, totalUserCount: action.totalCount}
+        case "IS-FETCHING":
+            return {...state, isFetching: action.isFetching}
         default:
             return state
     }
@@ -44,8 +48,9 @@ export type UnfollowActionType = ReturnType<typeof unfollowAC>
 export type SetUsersActionType = ReturnType<typeof setUsersAC>
 export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
 export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCountAC>
+export type isFetchingActionType = ReturnType<typeof isFetchingAC>
 
-export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | setTotalUsersCountActionType
+export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | setTotalUsersCountActionType | isFetchingActionType
 
 export const followAC = (id: number) => {
     return {type: "FOLLOW", id} as const
@@ -61,5 +66,8 @@ export const setCurrentPageAC = (currentPage: number) => {
 }
 export const setTotalUsersCountAC = (totalCount: number) => {
     return{type: "SET-TOTAL-COUNT", totalCount} as const
+}
+export const isFetchingAC = (isFetching: boolean) => {
+    return{type: "IS-FETCHING", isFetching} as const
 }
 export default usersReducer;
