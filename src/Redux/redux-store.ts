@@ -13,4 +13,9 @@ export type AppRootStateType = ReturnType<typeof rootReducer>
 
 const store = createStore(rootReducer)
 
+/*declare global {
+    interface Window { store: any }
+}
+window.store = store*/
+
 export default store;

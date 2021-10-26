@@ -43,31 +43,31 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
     }
 }
 
-export type FollowActionType = ReturnType<typeof followAC>
-export type UnfollowActionType = ReturnType<typeof unfollowAC>
-export type SetUsersActionType = ReturnType<typeof setUsersAC>
-export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
-export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCountAC>
-export type isFetchingActionType = ReturnType<typeof isFetchingAC>
+export type FollowActionType = ReturnType<typeof follow>
+export type UnfollowActionType = ReturnType<typeof unfollow>
+export type SetUsersActionType = ReturnType<typeof setUsers>
+export type SetCurrentPageActionType = ReturnType<typeof setCurrentPage>
+export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCount>
+export type isFetchingActionType = ReturnType<typeof isFetching>
 
 export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | setTotalUsersCountActionType | isFetchingActionType
 
-export const followAC = (id: number) => {
+export const follow = (id: number) => {
     return {type: "FOLLOW", id} as const
 }
-export const unfollowAC = (id: number) => {
+export const unfollow = (id: number) => {
     return {type: "UNFOLLOW", id} as const
 }
-export const setUsersAC = (users: Array<UserType>) => {
+export const setUsers = (users: Array<UserType>) => {
     return {type: "SET-USERS", users} as const
 }
-export const setCurrentPageAC = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
     return{type: "SET-CURRENT-PAGE", currentPage} as const
 }
-export const setTotalUsersCountAC = (totalCount: number) => {
+export const setTotalUsersCount = (totalCount: number) => {
     return{type: "SET-TOTAL-COUNT", totalCount} as const
 }
-export const isFetchingAC = (isFetching: boolean) => {
+export const isFetching = (isFetching: boolean) => {
     return{type: "IS-FETCHING", isFetching} as const
 }
 export default usersReducer;

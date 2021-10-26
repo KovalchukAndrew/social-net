@@ -5,6 +5,24 @@ export type PostsType = {
     message: string
     likeCount: number
 }
+export type ProfileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ContactsType
+
+}
+export type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
 
 let initialState = {
         posts: [
@@ -12,6 +30,7 @@ let initialState = {
             {id: v1(), message: "This is my first message!", likeCount: 11},
         ] as Array<PostsType>,
         newPostText: "",
+    profile: {} as ProfileType,
     }
 export type InitialStateType = typeof initialState
 
@@ -25,6 +44,8 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
 
         case "CHANGE-POST-MESSAGE":
             return {...state, newPostText: action.text}
+        case "SET-PROFILE-USER":
+            return {...state, profile: action.profile}
         default:
             return state
     }
@@ -34,7 +55,8 @@ export type AddPostActionType = ReturnType<typeof addPostAC>
 export type ChangePostMessageActionType = ReturnType<typeof changePostMessageAC>
 export type UpdateNewMessageBody = ReturnType<typeof updateNewMessageBodyAC>
 export type SendNewMessageBody = ReturnType<typeof sendMessageBodyAC>
-export type ActionType = AddPostActionType | ChangePostMessageActionType | UpdateNewMessageBody | SendNewMessageBody
+export type setProfileUsers = ReturnType<typeof setProfileUsers>
+export type ActionType = AddPostActionType | ChangePostMessageActionType | UpdateNewMessageBody | SendNewMessageBody | setProfileUsers
 
 export const addPostAC = (textPost: string) => {
     return {type: "ADD-POST", textPost} as const
@@ -47,5 +69,8 @@ export const updateNewMessageBodyAC = (body: string) => {
 }
 export const sendMessageBodyAC = () => {
     return {type: "SEND-MESSAGE"} as const
+}
+export const setProfileUsers = (profile: ProfileType) => {
+    return {type: "SET-PROFILE-USER", profile} as const
 }
 export default profileReducer;

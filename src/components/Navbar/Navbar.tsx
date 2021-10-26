@@ -23,6 +23,7 @@ function Navbar() {
                 <div className={s.item}>
                     <NavLink to='/nast' activeClassName={s.activeLink}>Settings</NavLink>
                 </div>
+
             </nav>
 
     )
