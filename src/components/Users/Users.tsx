@@ -2,8 +2,9 @@ import s from "./user.module.css";
 import userPhoto from "../../assets/images/man-300x300.png";
 import React from "react";
 import {UserType} from "../../Redux/users-reducer";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import axios from "axios";
+import {socialNetAPI} from "../../api/api";
 
 
 type UsersPropsType = {
@@ -14,12 +15,6 @@ type UsersPropsType = {
     users: UserType[]
     unfollow: (id: number) => void
     follow: (id: number) => void
-}
-type ResponseType<D> = {
-    resultCode: number
-    messages: Array<string>
-    fieldsErrors: Array<string>
-    data: D
 }
 
 const Users = (props: UsersPropsType) => {
@@ -48,30 +43,19 @@ const Users = (props: UsersPropsType) => {
                 </NavLink>
                 </div>
                 <div>
-                    {u.followed ? <button onClick={() => {
-                            axios.delete<ResponseType<{ item: UserType }>>(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,  {
-                                withCredentials: true,
-                                headers: {"API-KEY": "46d63a79-f294-4637-98b3-eaef83d2a733"},
+                    {u.followed ?
+                        <button onClick={() => {
+                            socialNetAPI.unfollowUser(u.id).then(response => {
+                                if (response.data.resultCode === 0)
+                                    props.unfollow(u.id)
                             })
-                                .then(response => {
-                                    if(response.data.resultCode === 0)
-                                        props.unfollow(u.id)
-                                })
 
-
-                            props.unfollow(u.id)
                         }}> Unfollow </button> :
                         <button onClick={() => {
-
-                            axios.post<ResponseType<{ item: UserType }>>(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                                withCredentials: true,
-                                headers: {"API-KEY": "46d63a79-f294-4637-98b3-eaef83d2a733"},
-                            })
-                                .then(response => {
-                                    if(response.data.resultCode === 0)
+                            socialNetAPI.followUser(u.id).then(response => {
+                                if (response.data.resultCode === 0)
                                     props.follow(u.id)
-                                })
-
+                            })
                         }}>Follow</button>}
                 </div>
             </span>
