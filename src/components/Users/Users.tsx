@@ -15,6 +15,8 @@ type UsersPropsType = {
     users: UserType[]
     unfollow: (id: number) => void
     follow: (id: number) => void
+    followingInProgress: Array<number>
+    isFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -44,17 +46,24 @@ const Users = (props: UsersPropsType) => {
                 </div>
                 <div>
                     {u.followed ?
-                        <button onClick={() => {
+                        <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                            props.isFollowingProgress(true, u.id)
                             socialNetAPI.unfollowUser(u.id).then(response => {
-                                if (response.data.resultCode === 0)
+                                if (response.data.resultCode === 0) {
                                     props.unfollow(u.id)
+                                }
+                                props.isFollowingProgress(false, u.id)
                             })
 
                         }}> Unfollow </button> :
-                        <button onClick={() => {
+                        <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+
+                            props.isFollowingProgress(true, u.id)
                             socialNetAPI.followUser(u.id).then(response => {
-                                if (response.data.resultCode === 0)
+                                if (response.data.resultCode === 0) {
                                     props.follow(u.id)
+                                }
+                                props.isFollowingProgress(false, u.id)
                             })
                         }}>Follow</button>}
                 </div>

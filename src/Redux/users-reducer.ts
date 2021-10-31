@@ -20,7 +20,8 @@ let initialState = {
     pageSize: 20,
     totalUserCount: 0,
     currentPage: 1,
-    isFetching: false,
+    isFetching: true,
+    followingInProgress: [] as Array<number>
 }
 export type InitialStateType = typeof initialState
 
@@ -38,6 +39,11 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
             return {...state, totalUserCount: action.totalCount}
         case "IS-FETCHING":
             return {...state, isFetching: action.isFetching}
+        case "IS-FOLLOWING-PROGRESS":
+            return {...state, followingInProgress: action.isFetching
+                    ?[...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
         default:
             return state
     }
@@ -49,8 +55,9 @@ export type SetUsersActionType = ReturnType<typeof setUsers>
 export type SetCurrentPageActionType = ReturnType<typeof setCurrentPage>
 export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCount>
 export type isFetchingActionType = ReturnType<typeof isFetching>
+export type isFollowingProgressActionType = ReturnType<typeof isFollowingProgress>
 
-export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | setTotalUsersCountActionType | isFetchingActionType
+export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | setTotalUsersCountActionType | isFetchingActionType | isFollowingProgressActionType
 
 export const follow = (id: number) => {
     return {type: "FOLLOW", id} as const
@@ -69,5 +76,8 @@ export const setTotalUsersCount = (totalCount: number) => {
 }
 export const isFetching = (isFetching: boolean) => {
     return{type: "IS-FETCHING", isFetching} as const
+}
+export const isFollowingProgress = (isFetching: boolean, userId: number) => {
+    return{type: "IS-FOLLOWING-PROGRESS", isFetching, userId} as const
 }
 export default usersReducer;
