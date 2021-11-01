@@ -102,5 +102,28 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
         })
     }
 }
+export const FollowThunkCreator = (userId: number) => {
+    return (dispatch: ({}: ActionType) => void) => {
+        dispatch(isFollowingProgress(true, userId))
+        socialNetAPI.followUser(userId).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(follow(userId))
+            }
+            dispatch(isFollowingProgress(false, userId))
+        })
+    }
+}
+export const UnfollowThunkCreator = (userId: number) => {
+    return (dispatch: ({}: ActionType) => void) => {
+        dispatch(isFollowingProgress(true, userId))
+        socialNetAPI.unfollowUser(userId).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(unfollow(userId))
+            }
+            dispatch(isFollowingProgress(false, userId))
+        })
+    }
+}
+
 
 export default usersReducer;
