@@ -2,7 +2,7 @@ import React from "react";
 import {AppRootStateType} from "../../Redux/redux-store";
 import {connect} from "react-redux";
 import {
-    follow, isFetching, isFollowingProgress,
+    follow, getUsersThunkCreator, isFetching, isFollowingProgress,
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
@@ -31,6 +31,7 @@ type MapDispatchToPropsType = {
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void,
     isFollowingProgress: (isFetching: boolean, userId: number) => void
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
 }
 
 export type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -39,13 +40,14 @@ class UsersClassComponent extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
 
-        this.props.toggleIsFetching(true)
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
+        /*this.props.toggleIsFetching(true)
 
         socialNetAPI.getUsers(this.props.currentPage, this.props.pageSize).then(response => {
             this.props.setUsers(response.data.items)
             this.props.setTotalUsersCount(response.data.totalCount)
             this.props.toggleIsFetching(false)
-        })
+        })*/
     }
 
     onPageChanged = (pageNumber: number) => {
@@ -88,5 +90,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 
 
 export const UsersContainer = connect(mapStateToProps, {
-    follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching: isFetching, isFollowingProgress
+    follow, unfollow, setUsers,
+    setCurrentPage, setTotalUsersCount, toggleIsFetching: isFetching,
+    isFollowingProgress, getUsersThunkCreator
 })(UsersClassComponent);

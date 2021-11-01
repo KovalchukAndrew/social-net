@@ -1,3 +1,5 @@
+import {socialNetAPI} from "../api/api";
+
 export type UserType = {
     name: string
     id: number
@@ -40,8 +42,9 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
         case "IS-FETCHING":
             return {...state, isFetching: action.isFetching}
         case "IS-FOLLOWING-PROGRESS":
-            return {...state, followingInProgress: action.isFetching
-                    ?[...state.followingInProgress, action.userId]
+            return {
+                ...state, followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
         default:
@@ -57,7 +60,14 @@ export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCount>
 export type isFetchingActionType = ReturnType<typeof isFetching>
 export type isFollowingProgressActionType = ReturnType<typeof isFollowingProgress>
 
-export type ActionType = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | setTotalUsersCountActionType | isFetchingActionType | isFollowingProgressActionType
+export type ActionType =
+    FollowActionType
+    | UnfollowActionType
+    | SetUsersActionType
+    | SetCurrentPageActionType
+    | setTotalUsersCountActionType
+    | isFetchingActionType
+    | isFollowingProgressActionType
 
 export const follow = (id: number) => {
     return {type: "FOLLOW", id} as const
@@ -69,15 +79,28 @@ export const setUsers = (users: Array<UserType>) => {
     return {type: "SET-USERS", users} as const
 }
 export const setCurrentPage = (currentPage: number) => {
-    return{type: "SET-CURRENT-PAGE", currentPage} as const
+    return {type: "SET-CURRENT-PAGE", currentPage} as const
 }
 export const setTotalUsersCount = (totalCount: number) => {
-    return{type: "SET-TOTAL-COUNT", totalCount} as const
+    return {type: "SET-TOTAL-COUNT", totalCount} as const
 }
 export const isFetching = (isFetching: boolean) => {
-    return{type: "IS-FETCHING", isFetching} as const
+    return {type: "IS-FETCHING", isFetching} as const
 }
 export const isFollowingProgress = (isFetching: boolean, userId: number) => {
-    return{type: "IS-FOLLOWING-PROGRESS", isFetching, userId} as const
+    return {type: "IS-FOLLOWING-PROGRESS", isFetching, userId} as const
 }
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: ({}: ActionType) => void) => {
+        dispatch(isFetching(true))
+
+        socialNetAPI.getUsers(currentPage, pageSize).then(response => {
+            dispatch(setUsers(response.data.items))
+            dispatch(setTotalUsersCount(response.data.totalCount))
+            dispatch(isFetching(false))
+        })
+    }
+}
+
 export default usersReducer;
