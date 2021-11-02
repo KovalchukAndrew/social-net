@@ -11,6 +11,7 @@ type HeaderPropsType = {
 function Header(props: HeaderPropsType) {
 
     return (
+
         <header className={s.header}>
             <img src='https://i.pinimg.com/originals/f2/7f/16/f27f168a92d6d8f144224702eb791282.gif'/>
             <div className={s.login}>

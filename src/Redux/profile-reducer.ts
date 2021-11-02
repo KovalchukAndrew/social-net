@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {socialNetAPI} from "../api/api";
 
 export type PostsType = {
     id: string
@@ -78,4 +79,13 @@ export const sendMessageBodyAC = () => {
 export const setProfileUsers = (profile: ProfileType) => {
     return {type: "SET-PROFILE-USER", profile} as const
 }
+
+const setProfileUsersThunkCreator = (userId: string) => {
+    return (dispatch: ({}: ActionType) => void) => {
+        socialNetAPI.setProfileUsers(userId).then(response => {
+            dispatch(setProfileUsers(response.data))
+        })
+    }
+}
+
 export default profileReducer;

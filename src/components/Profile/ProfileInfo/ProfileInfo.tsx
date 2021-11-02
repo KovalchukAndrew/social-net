@@ -1,7 +1,5 @@
 import React from "react";
 
-import Preloader from "../../common/Preloader/Preloader";
-
 type ProfileInfoPropsType = {
     props: string
     photo: string

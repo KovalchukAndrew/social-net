@@ -1,5 +1,7 @@
 import axios from "axios";
 import {UserType} from "../Redux/users-reducer";
+import {DataType} from "../Redux/auth-reducer";
+import {ProfileType} from "../Redux/profile-reducer";
 
 type ResponseType<D> = {
     resultCode: number
@@ -21,7 +23,6 @@ export const socialNetAPI = {
             headers: {"API-KEY": "46d63a79-f294-4637-98b3-eaef83d2a733"},
         })
         return promise;
-
     },
     followUser (id: number) {
         const promise = axios.post<ResponseType<{ item: UserType }>>(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {}, {
@@ -29,7 +30,17 @@ export const socialNetAPI = {
             headers: {"API-KEY": "46d63a79-f294-4637-98b3-eaef83d2a733"},
         })
         return promise;
+    },
+    setUser () {
+        const promise = axios.get<{resultCode: number, data: DataType }>(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
+            withCredentials: true
+        })
+        return promise;
+    },
+    setProfileUsers(userId: string) {
+        const promise = axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)
+        return promise;
+    },
 
-    }
 }
 
