@@ -10,7 +10,6 @@ type MapStateToPropsType = {
     profile: ProfileType
 }
 type MapDispatchToPropsType = {
-    //setProfileUsers: (profile: ProfileType) => void
     setProfileUsersThunkCreator: (userId: string) => void
 }
 type PathParamsType = {
@@ -25,16 +24,14 @@ class ProfileClassContainer extends React.Component<ProfilePropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         this.props.setProfileUsersThunkCreator(userId)
-        /*socialNetAPI.setProfileUsers(userId).then(response => {
-            this.props.setProfileUsers(response.data)
-        })*/
+
     }
 
     render() {
         return (
             <div>
                 <Profile profile={this.props.profile}
-                         //setProfileUsers={this.props.setProfileUsers}
+
                          setProfileUsersThunkCreator={this.props.setProfileUsersThunkCreator}
                 />
             </div>

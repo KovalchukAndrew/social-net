@@ -1,6 +1,4 @@
 import {socialNetAPI} from "../api/api";
-import {isFetching, setTotalUsersCount, setUsers} from "./users-reducer";
-import axios from "axios";
 
 export type DataType = {
     id: string,
@@ -41,38 +39,5 @@ export const SetUserDataThunkCreator = () => {
         })
     }
 }
-/*
-const arr = [
-    {
-        x: 1,
-
-        children: [
-            {
-                x: 2,
-                children: [],
-            },
-        ]
-    },
-    {
-        x: 1,
-        children: [
-            {
-                x: 2,
-                children: [],
-            },
-        ]
-    },
-];
-
-export const rec = (array) => {
-    array.forEach(item => {
-        item.x = 10;
-        rec(item.children);
-    })
-    const array2 = []
-    array.forEach((item, index) => {
-        array2[index] = item;
-    })
-}*/
 
 export default authReducer;

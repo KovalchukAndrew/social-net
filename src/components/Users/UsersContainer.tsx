@@ -68,7 +68,6 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     }
 }
 
-
 export const UsersContainer = connect(mapStateToProps, {
     FollowThunkCreator, UnfollowThunkCreator, setCurrentPage, isFollowingProgress, getUsersThunkCreator
 })(UsersClassComponent);

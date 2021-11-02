@@ -1,8 +1,7 @@
 import React from "react";
 import Header from "./Header";
-import axios from "axios";
 import {connect} from "react-redux";
-import {DataType, setUserData, SetUserDataThunkCreator} from "../../Redux/auth-reducer";
+import {SetUserDataThunkCreator} from "../../Redux/auth-reducer";
 import {AppRootStateType} from "../../Redux/redux-store";
 
 
@@ -12,8 +11,8 @@ type MapDispatchToPropsType = {
 
 type MapStateToPropsType = {
     id: string,
-    email:  string,
-    login:  string,
+    email: string,
+    login: string,
     isAuth: boolean
 }
 
@@ -24,6 +23,7 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
         this.props.SetUserDataThunkCreator()
     }
+
     render() {
         return <Header login={this.props.login} isAuth={this.props.isAuth}/>
     }
@@ -32,10 +32,10 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         id: state.auth.data.id,
-        email:  state.auth.data.email,
-        login:  state.auth.data.login,
+        email: state.auth.data.email,
+        login: state.auth.data.login,
         isAuth: state.auth.isAuth
     }
 }
 
-export default connect(mapStateToProps, {SetUserDataThunkCreator}) (HeaderContainer);
+export default connect(mapStateToProps, {SetUserDataThunkCreator})(HeaderContainer);
