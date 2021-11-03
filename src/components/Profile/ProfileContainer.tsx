@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {ActionType, ProfileType, setProfileUsers} from "../../Redux/profile-reducer";
 import {withRouter, RouteComponentProps} from 'react-router-dom'
 import {socialNetAPI} from "../../api/api";
+import {WithAuthRedirect} from "../HOC/withAuthRedirectComponent";
 
 type MapStateToPropsType = {
     profile: ProfileType
@@ -40,11 +41,14 @@ class ProfileClassContainer extends React.Component<ProfilePropsType> {
 
 }
 
+let AuthRedirectComponent = WithAuthRedirect(ProfileClassContainer)
+
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile
 })
+//@ts-ignore
+const WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);
 
-const WithUrlDataContainerComponent = withRouter(ProfileClassContainer);
 export default connect(mapStateToProps, {
     setProfileUsersThunkCreator: (userId: string) => {
         return (dispatch: ({}: ActionType) => void) => {
