@@ -3,8 +3,12 @@ import s from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
+import { Redirect } from "react-router-dom";
+
 
 export const Dialogs = (props: DialogsPropsType) => {
+    if(!props.isAuth) return <Redirect to={'/login'} />
+
 
     let dialogsElemets = props.dialogsPage.dialogs.map(user => <DialogItem name={user.name} id={user.id}/>)
     let messagesElement = props.dialogsPage.messages.map(message => <Message text={message.message}/>)
