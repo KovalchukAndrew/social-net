@@ -1,4 +1,5 @@
 import {socialNetAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 export type UserType = {
     name: string
@@ -92,7 +93,7 @@ export const isFollowingProgress = (isFetching: boolean, userId: number) => {
 }
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
-    return (dispatch: ({}: ActionType) => void) => {
+    return (dispatch: Dispatch<ActionType>) => {
         dispatch(isFetching(true))
 
         socialNetAPI.getUsers(currentPage, pageSize).then(response => {
@@ -103,7 +104,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
     }
 }
 export const FollowThunkCreator = (userId: number) => {
-    return (dispatch: ({}: ActionType) => void) => {
+    return (dispatch: Dispatch<ActionType>) => {
         dispatch(isFollowingProgress(true, userId))
         socialNetAPI.followUser(userId).then(response => {
             if (response.data.resultCode === 0) {
@@ -114,7 +115,7 @@ export const FollowThunkCreator = (userId: number) => {
     }
 }
 export const UnfollowThunkCreator = (userId: number) => {
-    return (dispatch: ({}: ActionType) => void) => {
+    return (dispatch: Dispatch<ActionType>) => {
         dispatch(isFollowingProgress(true, userId))
         socialNetAPI.unfollowUser(userId).then(response => {
             if (response.data.resultCode === 0) {

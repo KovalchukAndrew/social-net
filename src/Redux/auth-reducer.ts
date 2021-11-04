@@ -1,4 +1,5 @@
 import {socialNetAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 export type DataType = {
     id: string,
@@ -31,7 +32,7 @@ export const setUserData = (id: string, email: string, login: string) => {
 }
 
 export const SetUserDataThunkCreator = () => {
-    return (dispatch: ({}: ActionType) => void) => {
+    return (dispatch: Dispatch<ActionType>) => {
         socialNetAPI.setUser().then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(setUserData(response.data.data.id, response.data.data.email, response.data.data.login))

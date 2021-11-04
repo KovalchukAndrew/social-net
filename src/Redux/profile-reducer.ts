@@ -1,5 +1,6 @@
 import {v1} from "uuid";
 import {socialNetAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 export type PostsType = {
     id: string
@@ -81,7 +82,7 @@ export const setProfileUsers = (profile: ProfileType) => {
 }
 
 const setProfileUsersThunkCreator = (userId: string) => {
-    return (dispatch: ({}: ActionType) => void) => {
+    return (dispatch: Dispatch<ActionType>) => {
         socialNetAPI.setProfileUsers(userId).then(response => {
             dispatch(setProfileUsers(response.data))
         })
