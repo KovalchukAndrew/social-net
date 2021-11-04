@@ -81,7 +81,7 @@ export const setProfileUsers = (profile: ProfileType) => {
     return {type: "SET-PROFILE-USER", profile} as const
 }
 
-const setProfileUsersThunkCreator = (userId: string) => {
+export const getUserPofileThunkCreator = (userId: string) => {
     return (dispatch: Dispatch<ActionType>) => {
         socialNetAPI.setProfileUsers(userId).then(response => {
             dispatch(setProfileUsers(response.data))
