@@ -41,6 +41,18 @@ export const socialNetAPI = {
         const promise = axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)
         return promise;
     },
+    getStatus(userId: string) {
+        const promise = axios.get<string>(`https://social-network.samuraijs.com/api/1.0/profile/status/`+ userId)
+        return promise
+    },
+    updateStatus(status: string) {
+        const promise = axios.put<ResponseType<{status: string}>>(`https://social-network.samuraijs.com/api/1.0/profile/status`, {status: status}, {
+            withCredentials: true,
+            headers: {"API-KEY": "46d63a79-f294-4637-98b3-eaef83d2a733"},
+        } )
+        return promise
+    }
+
 
 }
 

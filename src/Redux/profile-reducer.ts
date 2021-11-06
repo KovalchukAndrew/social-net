@@ -38,6 +38,7 @@ let initialState = {
         ] as Array<PostsType>,
         newPostText: "",
     profile: {} as ProfileType,
+    status: "",
     }
 export type InitialStateType = typeof initialState
 
@@ -53,6 +54,8 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
             return {...state, newPostText: action.text}
         case "SET-PROFILE-USER":
             return {...state, profile: action.profile}
+        case "SET-STATUS":
+            return {...state, status: action.status}
         default:
             return state
     }
@@ -63,7 +66,9 @@ export type ChangePostMessageActionType = ReturnType<typeof changePostMessageAC>
 export type UpdateNewMessageBody = ReturnType<typeof updateNewMessageBodyAC>
 export type SendNewMessageBody = ReturnType<typeof sendMessageBodyAC>
 export type setProfileUsers = ReturnType<typeof setProfileUsers>
-export type ActionType = AddPostActionType | ChangePostMessageActionType | UpdateNewMessageBody | SendNewMessageBody | setProfileUsers
+export type setStatusActionType = ReturnType<typeof setStatus>
+
+export type ActionType = AddPostActionType | ChangePostMessageActionType | UpdateNewMessageBody | SendNewMessageBody | setProfileUsers | setStatusActionType
 
 export const addPostAC = (textPost: string) => {
     return {type: "ADD-POST", textPost} as const
@@ -80,11 +85,33 @@ export const sendMessageBodyAC = () => {
 export const setProfileUsers = (profile: ProfileType) => {
     return {type: "SET-PROFILE-USER", profile} as const
 }
+export const setStatus = (status: string) => {
+    return {type: "SET-STATUS", status} as const
+}
 
 export const getUserPofileThunkCreator = (userId: string) => {
     return (dispatch: Dispatch<ActionType>) => {
         socialNetAPI.setProfileUsers(userId).then(response => {
             dispatch(setProfileUsers(response.data))
+        })
+    }
+}
+
+export const getStatusThunkCreator = (userId: string) => {
+    return (dispatch: Dispatch<ActionType>) => {
+        socialNetAPI.getStatus(userId).then(response => {
+            dispatch(setStatus(response.data))
+        })
+    }
+}
+
+export const updateStatusThunkCreator = (status: string) => {
+    return (dispatch: Dispatch<ActionType>) => {
+        socialNetAPI.updateStatus(status).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
+
         })
     }
 }

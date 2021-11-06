@@ -1,28 +1,39 @@
 import React, {useState} from "react";
 
-type ProfileInfoPropsType = {
-    props: string
-    photo: string
+type ProfileStatusPropsType = {
+    status: string
+    updateStatus: (status: string) => void
 }
 
 
-export function ProfileStatus(props: any) {
+export function ProfileStatus(props: ProfileStatusPropsType) {
 
     let [editMode, setEditMode] = useState<boolean>(true)
+    let [status, setStatus] = useState<string>(props.status)
 
     return (
         <>
             <div>
                 {editMode ? <span
-                    onDoubleClick={() => setEditMode(false)
+                    onDoubleClick={() => {
+                        setEditMode(false)
+                    }
 
-                    }>{props.status}</span> : <></>}
+                    }>{props.status || "Your status"}</span> : <></>}
             </div>
             <div>
                 {!editMode ? <input
-                    onBlur={() => setEditMode(true)}
+                    onChange={(e) => {
+                        setStatus(e.currentTarget.value)
+                    }
+                    }
+                    onBlur={() => {
+                        props.updateStatus(status)
+                        setEditMode(true)
+
+                    }}
                     autoFocus
-                    value={props.status} /> : <></>}
+                    value={status} /> : <></>}
             </div>
         </>
 

@@ -11,6 +11,8 @@ export function Profile(props: OwnProfilePropsType) {
                 props={props.profile.fullName}
                 photo={
                     !props.profile.photos?.large ? "" : props.profile.photos.large}
+                status={props.status}
+                updateStatus={props.updateStatusThunkCreator}
             />
             <MyPostsContainer/>
         </div>
