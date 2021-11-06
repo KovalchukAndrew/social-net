@@ -16,6 +16,7 @@ export function ProfileStatus(props: ProfileStatusPropsType) {
             <div>
                 {editMode ? <span
                     onDoubleClick={() => {
+                        props.updateStatus(props.status)
                         setEditMode(false)
                     }
 
