@@ -36,7 +36,6 @@ let initialState = {
             {id: v1(), message: "Hi, how are you?", likeCount: 15},
             {id: v1(), message: "This is my first message!", likeCount: 11},
         ] as Array<PostsType>,
-        newPostText: "",
     profile: {} as ProfileType,
     status: "",
     }
@@ -46,12 +45,8 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
     switch (action.type) {
         case "ADD-POST":
         {
-            state.newPostText = ""
             return {...state, posts: [...state.posts, {id: v1(), message: action.textPost, likeCount: 0}]}
         }
-
-        case "CHANGE-POST-MESSAGE":
-            return {...state, newPostText: action.text}
         case "SET-PROFILE-USER":
             return {...state, profile: action.profile}
         case "SET-STATUS":
@@ -62,19 +57,15 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
 }
 
 export type AddPostActionType = ReturnType<typeof addPostAC>
-export type ChangePostMessageActionType = ReturnType<typeof changePostMessageAC>
 export type UpdateNewMessageBody = ReturnType<typeof updateNewMessageBodyAC>
 export type SendNewMessageBody = ReturnType<typeof sendMessageBodyAC>
 export type setProfileUsers = ReturnType<typeof setProfileUsers>
 export type setStatusActionType = ReturnType<typeof setStatus>
 
-export type ActionType = AddPostActionType | ChangePostMessageActionType | UpdateNewMessageBody | SendNewMessageBody | setProfileUsers | setStatusActionType
+export type ActionType = AddPostActionType | UpdateNewMessageBody | SendNewMessageBody | setProfileUsers | setStatusActionType
 
 export const addPostAC = (textPost: string) => {
     return {type: "ADD-POST", textPost} as const
-}
-export const changePostMessageAC = (text: string) => {
-    return {type: "CHANGE-POST-MESSAGE", text} as const
 }
 export const updateNewMessageBodyAC = (body: string) => {
     return {type: "UPDATE-NEW-MESSAGE-BODY", body} as const

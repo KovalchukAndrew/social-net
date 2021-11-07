@@ -9,7 +9,6 @@ import {
     updateStatusThunkCreator
 } from "../../Redux/profile-reducer";
 import {withRouter, RouteComponentProps} from 'react-router-dom'
-import {WithAuthRedirect} from "../HOC/withAuthRedirectComponent";
 import {compose} from "redux";
 
 type MapStateToPropsType = {
@@ -59,9 +58,8 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     status: state.profilePage.status
 })
 
-export default compose<React.ComponentType> (connect(mapStateToProps, {
-    getUserPofileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator
-}),
-    //WithAuthRedirect,
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+        getUserPofileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator
+    }),
     withRouter
-) (ProfileClassContainer)
+)(ProfileClassContainer)

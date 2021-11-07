@@ -1,34 +1,60 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from './MyPosts.module.css'
 import {Posts} from "./Post/Posts";
 import {MyPostPropsType} from "./MyPostsContainer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 export const MyPosts = (props: MyPostPropsType) => {
     let postsElement = props.posts.map((p) => <Posts id={p.id} message={p.message} likeCount={p.likeCount}/>)
 
-    const add = () => {
-        props.addPost(props.newPostText)
-
-    }
-
-    const onChangePost = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.changePostMessage(e.currentTarget.value)
+    const addPost = (value: FormDataType) => {
+        props.addPost(value.newPost)
     }
 
     return (
         <div className={s.postBlock}>
             <h3> New post </h3>
-            <div>
-                <textarea onChange={onChangePost} value={props.newPostText}/>
-            </div>
-            <div>
-                <button onClick={add} className={s.buttonPost}>Add post</button>
-                <button className={s.buttonPost}>Remove</button>
-            </div>
+
+            <NewPostReduxForm onSubmit={addPost}/>
+
             <div className={s.posts}>
                 {postsElement}
             </div>
         </div>
 
     )
+}
+
+type FormDataType = {
+    newPost: string
+}
+
+export  const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    return <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field component={"textarea"} name={"newPost"} placeholder={"Enter message"}/>
+        </div>
+        <div>
+            <button>Add post</button>
+            <button>Remove</button>
+        </div>
+    </form>
+};
+const NewPostReduxForm = reduxForm<FormDataType>(
+    {
+        form: 'newPost',
+    }
+)(AddPostForm)
+
+const newMessage = () => {
+    const onSubmit = (formData: FormDataType) => {
+        console.log(formData)
+    }
+
+    return (
+        <div>
+            <NewPostReduxForm onSubmit={onSubmit}/>
+        </div>
+    )
+
 }
