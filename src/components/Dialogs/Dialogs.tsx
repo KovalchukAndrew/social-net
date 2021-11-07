@@ -3,8 +3,7 @@ import s from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
-
-
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 export const Dialogs = (props: DialogsPropsType) => {
 
@@ -12,8 +11,8 @@ export const Dialogs = (props: DialogsPropsType) => {
     let messagesElement = props.dialogsPage.messages.map(message => <Message text={message.message}/>)
     let newMessageBody = props.dialogsPage.newMessageBogy;
 
-    const onSendMessageClick = () => {
-        props.sendMessageBody()
+    const addNewMessage = (values: FormDataType) => {
+        alert(values.newMessageBody)
     }
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewMessageBody(e.target.value)
@@ -33,16 +32,40 @@ export const Dialogs = (props: DialogsPropsType) => {
             {messagesElement}
         </div>
         <div>
-            <div><textarea
-                value={newMessageBody}
-                onChange={onNewMessageChange}
-                placeholder="Enter message"
-                onKeyPress={onKeyPressHandler}>
-            </textarea>
-            </div>
-            <div>
-                <button onClick={onSendMessageClick}>Add message</button>
-            </div>
+            <MessageReduxForm onSubmit={addNewMessage}/>
         </div>
     </div>
+}
+
+type FormDataType = {
+    newMessageBody: string
+}
+
+export  const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    return <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field component={"textarea"} name={"newMessageBody"} placeholder={"Enter message"}/>
+        </div>
+        <div>
+            <button>Send message</button>
+        </div>
+    </form>
+};
+const MessageReduxForm = reduxForm<FormDataType>(
+    {
+        form: 'newMessageBody',
+    }
+)(AddMessageForm)
+
+const newMessage = () => {
+    const onSubmit = (formData: FormDataType) => {
+        console.log(formData)
+    }
+
+    return (
+        <div>
+            <MessageReduxForm onSubmit={onSubmit}/>
+        </div>
+    )
+
 }
