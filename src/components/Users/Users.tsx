@@ -3,6 +3,7 @@ import userPhoto from "../../assets/images/man-300x300.png";
 import React from "react";
 import {UserType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 type UsersPropsType = {
     totalUserCount: number
@@ -24,6 +25,7 @@ const Users = (props: UsersPropsType) => {
         pages.push(i);
     }
     return <div>
+        <UserSearchForm/>
         <div> {
             pages.map(p => {
                 return <span
@@ -63,6 +65,40 @@ const Users = (props: UsersPropsType) => {
                 </span>
             </span>
         </div>)}
+    </div>
+}
+
+type UsreSearchFormObjectType = {
+    term: string
+}
+
+const usersSearchFormValidate = (values: any) => {
+    const errors = {};
+    return errors;
+}
+
+const UserSearchForm = () => {
+    const submit = (values: UsreSearchFormObjectType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
+        setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+        }, 400);
+    }
+    return <div>
+        <Formik
+            initialValues={{ term: '' }}
+            validate={usersSearchFormValidate}
+            onSubmit={submit}
+        >
+            {({ isSubmitting }) => (
+                <Form>
+                    <Field type="text" name="term" />
+                    <button type="submit" disabled={isSubmitting}>
+                        Search
+                    </button>
+                </Form>
+            )}
+        </Formik>
     </div>
 }
 
