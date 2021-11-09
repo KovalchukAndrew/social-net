@@ -24,9 +24,11 @@ let initialState = {
     totalUserCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: [] as Array<number>
+    followingInProgress: [] as Array<number>,
+    filter: {term: ""}
 }
 export type InitialStateType = typeof initialState
+export type FilterType = typeof initialState.filter
 
 const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
@@ -48,6 +50,8 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
+        case "SET-FILTER":
+            return {...state, filter: action.payload}
         default:
             return state
     }
@@ -60,6 +64,7 @@ export type SetCurrentPageActionType = ReturnType<typeof setCurrentPage>
 export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCount>
 export type isFetchingActionType = ReturnType<typeof isFetching>
 export type isFollowingProgressActionType = ReturnType<typeof isFollowingProgress>
+export type setFilterActionType = ReturnType<typeof setFilter>
 
 export type ActionType =
     FollowActionType
@@ -69,6 +74,7 @@ export type ActionType =
     | setTotalUsersCountActionType
     | isFetchingActionType
     | isFollowingProgressActionType
+    | setFilterActionType
 
 export const follow = (id: number) => {
     return {type: "FOLLOW", id} as const
@@ -91,40 +97,46 @@ export const isFetching = (isFetching: boolean) => {
 export const isFollowingProgress = (isFetching: boolean, userId: number) => {
     return {type: "IS-FOLLOWING-PROGRESS", isFetching, userId} as const
 }
-
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch<ActionType>) => {
-        dispatch(isFetching(true))
-
-        socialNetAPI.getUsers(currentPage, pageSize).then(response => {
-            dispatch(setUsers(response.data.items))
-            dispatch(setTotalUsersCount(response.data.totalCount))
-            dispatch(isFetching(false))
-        })
-    }
-}
-export const FollowThunkCreator = (userId: number) => {
-    return (dispatch: Dispatch<ActionType>) => {
-        dispatch(isFollowingProgress(true, userId))
-        socialNetAPI.followUser(userId).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(follow(userId))
-            }
-            dispatch(isFollowingProgress(false, userId))
-        })
-    }
-}
-export const UnfollowThunkCreator = (userId: number) => {
-    return (dispatch: Dispatch<ActionType>) => {
-        dispatch(isFollowingProgress(true, userId))
-        socialNetAPI.unfollowUser(userId).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(unfollow(userId))
-            }
-            dispatch(isFollowingProgress(false, userId))
-        })
-    }
+export const setFilter = (term: string) => {
+    return {
+        type: "SET-FILTER", payload: {term}
+    } as const
 }
 
+    export const getUsersThunkCreator = (currentPage: number, pageSize: number, term: string) => {
+        return (dispatch: Dispatch<ActionType>) => {
+            dispatch(isFetching(true))
+            dispatch(setFilter(term))
 
-export default usersReducer;
+            socialNetAPI.getUsers(currentPage, pageSize, term).then(response => {
+                dispatch(setUsers(response.data.items))
+                dispatch(setTotalUsersCount(response.data.totalCount))
+                dispatch(isFetching(false))
+            })
+        }
+    }
+    export const FollowThunkCreator = (userId: number) => {
+        return (dispatch: Dispatch<ActionType>) => {
+            dispatch(isFollowingProgress(true, userId))
+            socialNetAPI.followUser(userId).then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(follow(userId))
+                }
+                dispatch(isFollowingProgress(false, userId))
+            })
+        }
+    }
+    export const UnfollowThunkCreator = (userId: number) => {
+        return (dispatch: Dispatch<ActionType>) => {
+            dispatch(isFollowingProgress(true, userId))
+            socialNetAPI.unfollowUser(userId).then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unfollow(userId))
+                }
+                dispatch(isFollowingProgress(false, userId))
+            })
+        }
+    }
+
+
+    export default usersReducer;

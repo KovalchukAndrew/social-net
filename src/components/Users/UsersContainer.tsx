@@ -2,6 +2,7 @@ import React from "react";
 import {AppRootStateType} from "../../Redux/redux-store";
 import {connect} from "react-redux";
 import {
+    FilterType,
     FollowThunkCreator, getUsersThunkCreator, isFollowingProgress,
     setCurrentPage,
     UnfollowThunkCreator,
@@ -18,6 +19,7 @@ type MapStateToPropsType = {
     currentPage: number,
     isFetching: boolean,
     followingInProgress: Array<number>
+    filter: FilterType
 }
 
 type MapDispatchToPropsType = {
@@ -25,7 +27,7 @@ type MapDispatchToPropsType = {
     UnfollowThunkCreator: (id: number) => void
     setCurrentPage: (currentPage: number) => void
     isFollowingProgress: (isFetching: boolean, userId: number) => void
-    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
+    getUsersThunkCreator: (currentPage: number, pageSize: number, term: string) => void
 }
 
 export type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -33,11 +35,14 @@ export type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsTy
 class UsersClassComponent extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
-        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize, "")
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsersThunkCreator(pageNumber, this.props.pageSize)
+        this.props.getUsersThunkCreator(pageNumber, this.props.pageSize, "")
+    }
+    onFilterChanged = (filter: FilterType) => {
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize, filter.term)
     }
 
     render() {
@@ -47,6 +52,7 @@ class UsersClassComponent extends React.Component<UsersContainerPropsType> {
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
+                onFilterChanged={this.onFilterChanged}
                 users={this.props.users}
                 UnfollowThunkCreator={this.props.UnfollowThunkCreator}
                 FollowThunkCreator={this.props.FollowThunkCreator}
@@ -65,6 +71,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress,
+        filter: state.usersPage.filter
     }
 }
 

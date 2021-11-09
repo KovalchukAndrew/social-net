@@ -1,15 +1,16 @@
 import s from "./user.module.css";
 import userPhoto from "../../assets/images/man-300x300.png";
 import React from "react";
-import {UserType} from "../../Redux/users-reducer";
+import {FilterType, UserType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {UserSearchForm} from "./UserSearchForm";
 
 type UsersPropsType = {
     totalUserCount: number
     pageSize: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
+    onFilterChanged: (filter: FilterType) => void
     users: UserType[]
     UnfollowThunkCreator: (id: number) => void
     FollowThunkCreator: (id: number) => void
@@ -25,7 +26,7 @@ const Users = (props: UsersPropsType) => {
         pages.push(i);
     }
     return <div>
-        <UserSearchForm/>
+        <UserSearchForm onFilterChanged={props.onFilterChanged}/>
         <div> {
             pages.map(p => {
                 return <span
@@ -45,9 +46,13 @@ const Users = (props: UsersPropsType) => {
                 <div>
                     {u.followed
                         ? <button disabled={props.followingInProgress.some(id => id === u.id)}
-                                  onClick={() => {props.UnfollowThunkCreator(u.id)}}>Unfollow </button>
+                                  onClick={() => {
+                                      props.UnfollowThunkCreator(u.id)
+                                  }}>Unfollow </button>
                         : <button disabled={props.followingInProgress.some(id => id === u.id)}
-                                  onClick={() => {props.FollowThunkCreator(u.id)}}>Follow</button>}
+                                  onClick={() => {
+                                      props.FollowThunkCreator(u.id)
+                                  }}>Follow</button>}
                 </div>
             </span>
             <span>
@@ -68,38 +73,5 @@ const Users = (props: UsersPropsType) => {
     </div>
 }
 
-type UsreSearchFormObjectType = {
-    term: string
-}
-
-const usersSearchFormValidate = (values: any) => {
-    const errors = {};
-    return errors;
-}
-
-const UserSearchForm = () => {
-    const submit = (values: UsreSearchFormObjectType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
-        setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-        }, 400);
-    }
-    return <div>
-        <Formik
-            initialValues={{ term: '' }}
-            validate={usersSearchFormValidate}
-            onSubmit={submit}
-        >
-            {({ isSubmitting }) => (
-                <Form>
-                    <Field type="text" name="term" />
-                    <button type="submit" disabled={isSubmitting}>
-                        Search
-                    </button>
-                </Form>
-            )}
-        </Formik>
-    </div>
-}
 
 export default Users;

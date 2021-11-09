@@ -11,8 +11,8 @@ type ResponseType<D> = {
 }
 
 export const socialNetAPI = {
-    getUsers (currentPage: number, pageSize: number) {
-        const promise = axios.get<{ items: UserType[], totalCount: number }>(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`, {
+    getUsers (currentPage: number, pageSize: number, term: string) {
+        const promise = axios.get<{ items: UserType[], totalCount: number }>(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}&term=${term}`, {
             withCredentials:true
         })
         return promise;
