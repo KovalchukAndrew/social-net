@@ -41,4 +41,13 @@ export const SetUserDataThunkCreator = () => {
     }
 }
 
+/*export const loginTC = (email: string, password: string, remeberMe: boolean) => (dispatch: Dispatch<ActionType>) => {
+socialNetAPI.login(email, password, remeberMe)
+    .then((response) => {
+        if (response.data.resultCode === 0) {
+            dispatch(SetUserDataThunkCreator())
+        }
+    })
+}*/
+
 export default authReducer;

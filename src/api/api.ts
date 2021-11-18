@@ -51,7 +51,14 @@ export const socialNetAPI = {
             headers: {"API-KEY": "46d63a79-f294-4637-98b3-eaef83d2a733"},
         } )
         return promise
-    }
+    },
+    login(email: string, password: string, remeberMe: boolean) {
+        return axios.post<{ email: string, password: string, remeberMe: boolean, resultCode: number, }>(`https://social-network.samuraijs.com/api/1.0/auth/login`, {email, password, remeberMe,})
+    },
+    logout() {
+        return axios.delete(`https://social-network.samuraijs.com/api/1.0/auth/login`)
+    },
+
 
 
 }
