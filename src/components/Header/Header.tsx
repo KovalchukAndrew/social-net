@@ -1,13 +1,15 @@
 import React from "react";
 import s from './Header.module.css';
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
+
 
 
 type HeaderPropsType = {
-    login: string
+    login: string | null
     isAuth: boolean
-
+    logoutTC: () => void
 }
+
 function Header(props: HeaderPropsType) {
 
     return (
@@ -17,8 +19,9 @@ function Header(props: HeaderPropsType) {
             <div className={s.login}>
 
                 {
-
-                    props.isAuth ? props.login : <NavLink to={"/login"}>Login</NavLink>
+                    props.isAuth
+                        ? <div>{props.login} - <button onClick={props.logoutTC}>Log out</button></div>
+                    : <NavLink to={"/login"}>Login</NavLink>
                 }
 
             </div>

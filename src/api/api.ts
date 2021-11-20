@@ -37,11 +37,11 @@ export const socialNetAPI = {
         })
         return promise;
     },
-    setProfileUsers(userId: string) {
+    setProfileUsers(userId: string | null) {
         const promise = axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)
         return promise;
     },
-    getStatus(userId: string) {
+    getStatus(userId: string | null) {
         const promise = axios.get<string>(`https://social-network.samuraijs.com/api/1.0/profile/status/`+ userId)
         return promise
     },
@@ -52,11 +52,14 @@ export const socialNetAPI = {
         } )
         return promise
     },
-    login(email: string, password: string, remeberMe: boolean) {
-        return axios.post<{resultCode: number, data: DataType }>(`https://social-network.samuraijs.com/api/1.0/auth/login`, {email, password, remeberMe,})
+    login(email: string | null, password: string | null, remeberMe: boolean) {
+        return axios.post<{resultCode: number, data: DataType }>(`https://social-network.samuraijs.com/api/1.0/auth/login`, {email, password, remeberMe,}, {
+            withCredentials: true,
+            headers: {"API-KEY": "46d63a79-f294-4637-98b3-eaef83d2a733"},
+        })
     },
     logout() {
-        return axios.delete(`https://social-network.samuraijs.com/api/1.0/auth/login`)
+        return axios.delete<{resultCode: number, data: DataType }>(`https://social-network.samuraijs.com/api/1.0/auth/login`)
     },
 
 
