@@ -1,5 +1,7 @@
 import {socialNetAPI} from "../api/api";
 import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {AppRootStateType} from "./redux-store";
 
 export type DataType = {
     id: string,
@@ -31,7 +33,7 @@ export const setUserData = (id: string, email: string, login: string) => {
     return {type: "SET-USER-DATA", data: {id, email, login}} as const
 }
 
-export const SetUserDataThunkCreator = () => {
+export const getUserDataThunkCreator = () => {
     return (dispatch: Dispatch<ActionType>) => {
         socialNetAPI.setUser().then(response => {
             if (response.data.resultCode === 0) {
@@ -41,13 +43,13 @@ export const SetUserDataThunkCreator = () => {
     }
 }
 
-/*export const loginTC = (email: string, password: string, remeberMe: boolean) => (dispatch: Dispatch<ActionType>) => {
+export const loginTC = (email: string, password: string, remeberMe: boolean):ThunkAction<void, AppRootStateType, void, ActionType> => (dispatch) => {
 socialNetAPI.login(email, password, remeberMe)
     .then((response) => {
         if (response.data.resultCode === 0) {
-            dispatch(SetUserDataThunkCreator())
+            dispatch(getUserDataThunkCreator())
         }
     })
-}*/
+}
 
 export default authReducer;

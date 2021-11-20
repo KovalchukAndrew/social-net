@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 type ProfileStatusPropsType = {
     status: string
@@ -10,13 +10,15 @@ export function ProfileStatus(props: ProfileStatusPropsType) {
 
     let [editMode, setEditMode] = useState<boolean>(true)
     let [status, setStatus] = useState<string>(props.status)
-
+    useEffect(() => {
+        setStatus(props.status)
+    },[props.status])
     return (
         <>
             <div>
                 {editMode ? <span
                     onDoubleClick={() => {
-                        props.updateStatus(props.status)
+                        props.updateStatus(status)
                         setEditMode(false)
                     }
 

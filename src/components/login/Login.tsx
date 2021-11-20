@@ -8,6 +8,9 @@ type FormDataType = {
 }
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props ) => {
+    const login = () => {
+
+    }
     return (
             <form onSubmit={props.handleSubmit}>
                 <div>
@@ -20,7 +23,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props ) => {
                     <Field component={"input"} name={"rememberMe"} type="checkbox"/> remember me
                 </div>
                 <div>
-                    <button>Login</button>
+                    <button >Login</button>
                 </div>
             </form>
         )
