@@ -53,7 +53,7 @@ export const socialNetAPI = {
         return promise
     },
     login(email: string | null, password: string | null, remeberMe: boolean) {
-        return axios.post<{resultCode: number, data: DataType }>(`https://social-network.samuraijs.com/api/1.0/auth/login`, {email, password, remeberMe,}, {
+        return axios.post<{resultCode: number, data: DataType, messages: string[] }>(`https://social-network.samuraijs.com/api/1.0/auth/login`, {email, password, remeberMe,}, {
             withCredentials: true,
             headers: {"API-KEY": "46d63a79-f294-4637-98b3-eaef83d2a733"},
         })

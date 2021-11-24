@@ -2,6 +2,8 @@ import {socialNetAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "./redux-store";
+import {stopSubmit} from "redux-form";
+import {FormAction} from "redux-form/lib/actions";
 
 export type DataType = {
     id: string | null,
@@ -43,11 +45,16 @@ export const getUserDataThunkCreator = () => {
     }
 }
 
-export const loginTC = (email: string, password: string, remeberMe: boolean):ThunkAction<void, AppRootStateType, void, ActionType> => (dispatch) => {
-socialNetAPI.login(email, password, remeberMe)
+export const loginTC = (email: string, password: string, remeberMe: boolean):ThunkAction<void, AppRootStateType, void, ActionType | FormAction>  => (dispatch) => {
+
+    socialNetAPI.login(email, password, remeberMe)
     .then((response) => {
         if (response.data.resultCode === 0) {
             dispatch(getUserDataThunkCreator())
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+
+            dispatch(stopSubmit("login", {_error: message}))
         }
     })
 }
