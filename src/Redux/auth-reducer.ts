@@ -31,34 +31,32 @@ export type SetUserDataActionType = ReturnType<typeof setUserData>
 
 export type ActionType = SetUserDataActionType
 
-export const setUserData = (id: string | null, email: string | null, login: string |null, isAuth: boolean) => {
+export const setUserData = (id: string | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {type: "SET-USER-DATA", data: {id, email, login}, isAuth} as const
 }
 
-export const getUserDataThunkCreator = () => {
-    return (dispatch: Dispatch<ActionType>) => {
-        socialNetAPI.setUser().then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setUserData(response.data.data.id, response.data.data.email, response.data.data.login, true))
-            }
-        })
-    }
-}
-
-export const loginTC = (email: string, password: string, remeberMe: boolean):ThunkAction<void, AppRootStateType, void, ActionType | FormAction>  => (dispatch) => {
-
-    socialNetAPI.login(email, password, remeberMe)
-    .then((response) => {
+export const getUserDataThunkCreator = () => (dispatch: Dispatch<ActionType>) => {
+    return socialNetAPI.setUser().then(response => {
         if (response.data.resultCode === 0) {
-            dispatch(getUserDataThunkCreator())
-        } else {
-            let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
-
-            dispatch(stopSubmit("login", {_error: message}))
+            dispatch(setUserData(response.data.data.id, response.data.data.email, response.data.data.login, true))
         }
     })
 }
-export const logoutTC = () => (dispatch:Dispatch<ActionType>) => {
+
+export const loginTC = (email: string, password: string, remeberMe: boolean): ThunkAction<void, AppRootStateType, void, ActionType | FormAction> => (dispatch) => {
+
+    socialNetAPI.login(email, password, remeberMe)
+        .then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(getUserDataThunkCreator())
+            } else {
+                let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+
+                dispatch(stopSubmit("login", {_error: message}))
+            }
+        })
+}
+export const logoutTC = () => (dispatch: Dispatch<ActionType>) => {
     socialNetAPI.logout()
         .then((response) => {
             if (response.data.resultCode === 0) {
