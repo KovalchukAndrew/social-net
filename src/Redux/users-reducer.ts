@@ -106,7 +106,7 @@ export const setFilter = (term: string) => {
     export const getUsersThunkCreator = (currentPage: number, pageSize: number, term: string) => {
         return (dispatch: Dispatch<ActionType>) => {
             dispatch(isFetching(true))
-            dispatch(setFilter(term))
+            dispatch(setCurrentPage(currentPage))
 
             socialNetAPI.getUsers(currentPage, pageSize, term).then(response => {
                 dispatch(setUsers(response.data.items))
